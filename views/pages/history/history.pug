@@ -1,0 +1,15 @@
+extends ../../layouts/main
+
+block content
+    .container.my-5
+        h2.text-center.mb-4 Lịch Sử Nồng Độ Khí Gas
+        table.table.table-bordered.mt-3
+            thead
+                tr
+                    th Thời Gian
+                    th Nồng Độ Khí Gas (ppm)
+            tbody
+                each record in gasHistory
+                    tr
+                        td= record.time
+                        td= record.level

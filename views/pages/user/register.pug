@@ -1,0 +1,68 @@
+doctype html
+html(lang="en")
+
+    head
+        meta(charset="utf-8")
+        meta(http-equiv="X-UA-Compatible" content="IE=edge")
+        meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+        meta(name="description" content="")
+        meta(name="author" content="")
+        link(rel="icon" type="image/png" href="https://img.icons8.com/emoji/48/fire.png") 
+
+        title Hệ thống cảnh báo khí gas
+
+        //- Custom fonts for this template
+        link(href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css")
+        link(href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet")
+
+        //- Custom styles for this template
+        link(href="/css/sb-admin-2.min.css" rel="stylesheet")
+        link(rel="stylesheet", href="/css/register.css")
+
+    body.bg-gradient-primary
+
+        .container
+
+            .card.o-hidden.border-0.shadow-lg.my-5
+                .card-body.p-0
+                    //- Nested Row within Card Body
+                    .row
+                        .col-lg-5.d-none.d-lg-block.bg-register-image
+                        .col-lg-7
+                            .p-5
+                                .text-center
+                                    h1.h4.text-gray-900.mb-4 Tạo Tài Khoản
+                                form.user
+                                    .form-group.row
+                                        .col-sm-6.mb-3.mb-sm-0
+                                            input#exampleFirstName.form-control.form-control-user(type="text" placeholder="Họ, Tên đệm")
+                                        .col-sm-6
+                                            input#exampleLastName.form-control.form-control-user(type="text" placeholder="Tên")
+                                    .form-group
+                                        input#exampleInputEmail.form-control.form-control-user(type="email" placeholder="Email")
+                                    .form-group.row
+                                        .col-sm-6.mb-3.mb-sm-0
+                                            input#exampleInputPassword.form-control.form-control-user(type="password" placeholder="Mật khẩu")
+                                        .col-sm-6
+                                            input#exampleRepeatPassword.form-control.form-control-user(type="password" placeholder="Nhập lại mật khẩu")
+                                    a.btn.btn-primary.btn-user.btn-block(href="login") Đăng ký
+                                    hr
+                                    a.btn.btn-google.btn-user.btn-block(href="index.html")
+                                        i.fab.fa-google.fa-fw
+                                        | Đăng ký với Google
+                                    a.btn.btn-facebook.btn-user.btn-block(href="index.html")
+                                        i.fab.fa-facebook-f.fa-fw
+                                        | Đăng ký với Facebook
+                                hr
+                                .text-center
+                                    a.small(href="/user/login") Đã có tài khoản? Đăng nhập tại đây!
+
+        //- Bootstrap core JavaScript
+        script(src="/vendor/jquery/jquery.min.js")
+        script(src="/vendor/bootstrap/js/bootstrap.bundle.min.js")
+
+        //- Core plugin JavaScript
+        script(src="/vendor/jquery-easing/jquery.easing.min.js")
+
+        //- Custom scripts for all pages
+        script(src="/js/sb-admin-2.min.js")

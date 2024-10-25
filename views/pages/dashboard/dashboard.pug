@@ -1,0 +1,13 @@
+extends ../../layouts/main
+
+block content
+    .container.my-5
+        h2.text-center.mb-4 Giám Sát Nồng Độ Khí Gas
+        .row
+            .col-md-6.offset-md-3
+                .card
+                    .card-body
+                        h5.card-title.text-center Nồng Độ Khí Gas Hiện Tại
+                        p.card-text.text-center.display-4 #{currentGasLevel} ppm
+                        if alert
+                            .alert.alert-danger.mt-3.text-center Nồng độ khí gas vượt ngưỡng an toàn!
