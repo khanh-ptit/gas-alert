@@ -2,10 +2,13 @@
 ul.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordion(id="accordionSidebar")
     
     //- Sidebar - Brand
-    a.sidebar-brand.d-flex.align-items-center.justify-content-center(href="index.html")
+    //- Sidebar - Brand
+    a.sidebar-brand.d-flex.align-items-center.justify-content-center(href="/dashboard")
         div.sidebar-brand-icon.rotate-n-15
-            i.fas.fa-laugh-wink
+            //- Replace the icon with a gas-related one, such as a gas mask or alert icon
+            i.fas.fa-gas-pump
         div.sidebar-brand-text.mx-3 GAS ALERT
+
             //- sup 2
 
     //- Divider
@@ -13,74 +16,33 @@ ul.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordion(id="accordionSi
 
     //- Nav Item - Dashboard
     li.nav-item.active
-        a.nav-link(href="index.html")
+        a.nav-link(href="/dashboard")
             i.fas.fa-fw.fa-tachometer-alt
-            span Dashboard
+            span Tổng quan
+    
+    //- Nav Item - History
+    li.nav-item
+        a.nav-link(href="/history")
+            i.fas.fa-fw.fa-history
+            span Lịch sử
 
     //- Divider
     hr.sidebar-divider
 
     //- Heading
-    div.sidebar-heading Interface
-
+    div.sidebar-heading Tài khoản
     //- Nav Item - Pages Collapse Menu
     li.nav-item
         a.nav-link.collapsed(href="#", data-toggle="collapse", data-target="#collapseTwo", aria-expanded="true", aria-controls="collapseTwo")
             i.fas.fa-fw.fa-cog
-            span Components
+            span Tài khoản của bạn
         div#collapseTwo.collapse(aria-labelledby="headingTwo", data-parent="#accordionSidebar")
             div.bg-white.py-2.collapse-inner.rounded
-                h6.collapse-header Custom Components:
-                a.collapse-item(href="buttons.html") Buttons
-                a.collapse-item(href="cards.html") Cards
-
-    //- Nav Item - Utilities Collapse Menu
-    li.nav-item
-        a.nav-link.collapsed(href="#", data-toggle="collapse", data-target="#collapseUtilities", aria-expanded="true", aria-controls="collapseUtilities")
-            i.fas.fa-fw.fa-wrench
-            span Utilities
-        div#collapseUtilities.collapse(aria-labelledby="headingUtilities", data-parent="#accordionSidebar")
-            div.bg-white.py-2.collapse-inner.rounded
-                h6.collapse-header Custom Utilities:
-                a.collapse-item(href="utilities-color.html") Colors
-                a.collapse-item(href="utilities-border.html") Borders
-                a.collapse-item(href="utilities-animation.html") Animations
-                a.collapse-item(href="utilities-other.html") Other
-
-    //- Divider
-    hr.sidebar-divider
-
-    //- Heading
-    div.sidebar-heading Addons
-
-    //- Nav Item - Pages Collapse Menu
-    li.nav-item
-        a.nav-link.collapsed(href="#", data-toggle="collapse", data-target="#collapsePages", aria-expanded="true", aria-controls="collapsePages")
-            i.fas.fa-fw.fa-folder
-            span Pages
-        div#collapsePages.collapse(aria-labelledby="headingPages", data-parent="#accordionSidebar")
-            div.bg-white.py-2.collapse-inner.rounded
-                h6.collapse-header Login Screens:
-                a.collapse-item(href="/login") Login
-                a.collapse-item(href="register.html") Register
-                a.collapse-item(href="forgot-password.html") Forgot Password
-                div.collapse-divider
-                h6.collapse-header Other Pages:
-                a.collapse-item(href="404.html") 404 Page
-                a.collapse-item(href="blank.html") Blank Page
-
-    //- Nav Item - Charts
-    li.nav-item
-        a.nav-link(href="charts.html")
-            i.fas.fa-fw.fa-chart-area
-            span Charts
-
-    //- Nav Item - Tables
-    li.nav-item
-        a.nav-link(href="tables.html")
-            i.fas.fa-fw.fa-table
-            span Tables
-
+                h6.collapse-header Menu:
+                a.collapse-item(href="/user/info") Thông tin tài khoản
+                a.collapse-item(href="/user/change-password") Đổi mật khẩu
+                a.collapse-item(href="/user/logout") Đăng xuất
+   
     //- Divider
     hr.sidebar-divider.d-none.d-md-block
 
@@ -90,8 +52,10 @@ ul.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordion(id="accordionSi
 
     //- Sidebar Message
     div.sidebar-card.d-none.d-lg-flex
-        img.sidebar-card-illustration.mb-2(src="img/undraw_rocket.svg", alt="...")
+        img.sidebar-card-illustration.mb-2(src="https://img.icons8.com/ios-filled/100/fa314a/gas-mask.png", alt="Gas Alert Icon")
+        //- img.sidebar-card-illustration.mb-2(src="/img/gas-warning-icon.svg", alt="Gas Alert Icon")
         p.text-center.mb-2
-            strong SB Admin Pro
-            |  is packed with premium features, components, and more!
-        a.btn.btn-success.btn-sm(href="https://startbootstrap.com/theme/sb-admin-pro") Upgrade to Pro!
+            strong Hệ thống Cảnh Báo Khí Gas
+            |  luôn theo dõi nồng độ khí gas để bảo vệ an toàn cho bạn và gia đình.
+        p.text-center.mb-2 Cập nhật ngay thông tin của bạn để nhận thông báo tức thì khi có rò rỉ khí gas.
+        a.btn.btn-warning.btn-sm(href="/user/info") Cập nhật Thông tin

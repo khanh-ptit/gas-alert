@@ -19,8 +19,12 @@ html(lang="en")
         //- Custom styles for this template
         link(href="/css/sb-admin-2.min.css" rel="stylesheet")
         link(rel="stylesheet", href="/css/auth.css")
+        link(rel="stylesheet", href="/css/main.css")
 
     body.bg-gradient-primary
+        include ../../mixins/alert.pug
+        +alert-error(5000)
+        +alert-success(5000)
 
         .container
 
@@ -39,16 +43,16 @@ html(lang="en")
                                     .p-5
                                         .text-center
                                             h1.h4.text-gray-900.mb-4 Hệ thống cảnh báo khí gas!
-                                        form.user
+                                        form(class="user" action="/user/login" method="POST")
                                             .form-group
-                                                input#exampleInputEmail.form-control.form-control-user(type="email" aria-describedby="emailHelp" placeholder="Nhập email")
+                                                input#exampleInputEmail.form-control.form-control-user(type="email" name="email" aria-describedby="emailHelp" placeholder="Nhập email")
                                             .form-group
-                                                input#exampleInputPassword.form-control.form-control-user(type="password" placeholder="Mật khẩu")
+                                                input#exampleInputPassword.form-control.form-control-user(type="password" name="password" placeholder="Mật khẩu")
                                             .form-group
                                                 .custom-control.custom-checkbox.small
                                                     input#customCheck.custom-control-input(type="checkbox")
                                                     label.custom-control-label(for="customCheck") Nhớ mật khẩu
-                                            a.btn.btn-primary.btn-user.btn-block(href="index.html") Đăng nhập
+                                            button.btn.btn-primary.btn-user.btn-block(type="submit") Đăng nhập
                                             hr
                                             a.btn.btn-google.btn-user.btn-block(href="index.html")
                                                 i.fab.fa-google.fa-fw
@@ -71,3 +75,4 @@ html(lang="en")
 
         //- Custom scripts for all pages
         script(src="/js/sb-admin-2.min.js")
+        script(src="/js/script.js") 

@@ -1,13 +1,32 @@
 extends ../../layouts/main
+include ../../mixins/alert.pug
 
 block content
+    +alert-success(5000)
+    +alert-error(5000)
+
     .container.my-5
         h2.text-center.mb-4 Giám Sát Nồng Độ Khí Gas
+
+        //- Current Gas Level Card
         .row
             .col-md-6.offset-md-3
-                .card
+                .card.mb-4
                     .card-body
                         h5.card-title.text-center Nồng Độ Khí Gas Hiện Tại
-                        p.card-text.text-center.display-4 #{currentGasLevel} ppm
-                        if alert
+                        p.card-text.text-center.display-4 #{currentGasLevel}160 ppm
+                        if (alert)
                             .alert.alert-danger.mt-3.text-center Nồng độ khí gas vượt ngưỡng an toàn!
+
+        //- Line Chart Section
+        .row
+            .col-md-12
+                .card
+                    .card-body
+                        h5.card-title.text-center Nồng Độ Khí Gas Theo Thời Gian
+                        .chart-container
+                            canvas#gasLevelChart(width="100%" height="40") 
+
+
+    script(src="/js/dashboard.js") 
+            

@@ -1,6 +1,5 @@
 doctype html
 html(lang="en")
-
     head
         meta(charset="utf-8")
         meta(http-equiv="X-UA-Compatible" content="IE=edge")
@@ -18,11 +17,14 @@ html(lang="en")
         //- Custom styles for this template
         link(href="/css/sb-admin-2.min.css" rel="stylesheet")
         link(rel="stylesheet", href="/css/register.css")
+        link(rel="stylesheet", href="/css/main.css")
 
     body.bg-gradient-primary
-
+        include ../../mixins/alert.pug
+        +alert-error(5000)
+        +alert-success(5000)
+    
         .container
-
             .card.o-hidden.border-0.shadow-lg.my-5
                 .card-body.p-0
                     //- Nested Row within Card Body
@@ -32,20 +34,18 @@ html(lang="en")
                             .p-5
                                 .text-center
                                     h1.h4.text-gray-900.mb-4 Tạo Tài Khoản
-                                form.user
+                                form(class="user" action="/user/register" method="POST")
                                     .form-group.row
-                                        .col-sm-6.mb-3.mb-sm-0
-                                            input#exampleFirstName.form-control.form-control-user(type="text" placeholder="Họ, Tên đệm")
-                                        .col-sm-6
-                                            input#exampleLastName.form-control.form-control-user(type="text" placeholder="Tên")
+                                        .col-sm-12
+                                            input#exampleLastName.form-control.form-control-user(type="text" name="name" placeholder="Họ Và Tên" required)
                                     .form-group
-                                        input#exampleInputEmail.form-control.form-control-user(type="email" placeholder="Email")
+                                        input#exampleInputEmail.form-control.form-control-user(type="email" name="email" placeholder="Email" required)
                                     .form-group.row
                                         .col-sm-6.mb-3.mb-sm-0
-                                            input#exampleInputPassword.form-control.form-control-user(type="password" placeholder="Mật khẩu")
+                                            input#exampleInputPassword.form-control.form-control-user(type="password" name="password" placeholder="Mật khẩu" required)
                                         .col-sm-6
-                                            input#exampleRepeatPassword.form-control.form-control-user(type="password" placeholder="Nhập lại mật khẩu")
-                                    a.btn.btn-primary.btn-user.btn-block(href="login") Đăng ký
+                                            input#exampleRepeatPassword.form-control.form-control-user(type="password" name="confirm_password" placeholder="Nhập lại mật khẩu" required)
+                                    button.btn.btn-primary.btn-user.btn-block(type="submit") Đăng ký
                                     hr
                                     a.btn.btn-google.btn-user.btn-block(href="index.html")
                                         i.fab.fa-google.fa-fw
@@ -66,3 +66,4 @@ html(lang="en")
 
         //- Custom scripts for all pages
         script(src="/js/sb-admin-2.min.js")
+        script(src="/js/script.js") 

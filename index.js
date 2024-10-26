@@ -1,56 +1,36 @@
-const express = require('express')
-const app = express()
-const port = 8888
+const express = require('express');
+const methodOverride = require("method-override");
+const flash = require('express-flash')
+const cookieParser = require('cookie-parser')
+const session = require('express-session')
+require("dotenv").config();
+const database = require("./config/database");
+database.connect();
 
-const route = require("./routes/index.route")
+const app = express();
+const port = process.env.PORT || 3000; // Thêm giá trị dự phòng cho cổng
+
+const route = require("./routes/index.route");
 
 // Cấu hình view engine Pug
-app.set("views", "./views")
-app.set("view engine", "pug")
+app.set("views", "./views");
+app.set("view engine", "pug");
 
-// Middleware để sử dụng các tệp tĩnh
+// Middleware để xử lý dữ liệu từ form và ghi đè phương thức
 app.use(express.static('public'));
-app.use(express.urlencoded({
-    extended: true
-}));
+app.use(methodOverride('_method'));  // Đặt trước express.json() và express.urlencoded()
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-route(app)
+// Flash
+app.use(cookieParser('tomcacto'));
+app.use(session({ cookie: { maxAge: 60000 }}));
+app.use(flash());
+// End flash
 
-
-// app.get('/', (req, res) => {
-//     res.render("pages/dashboard.pug")
-// })
-
-// app.get('/login', (req, res) => {
-//     res.render("pages/login.pug")
-// })
-
-// app.get('/history', (req, res) => {
-//     // Dữ liệu mẫu cho lịch sử nồng độ khí gas
-//     const sampleData = [
-//         { time: '2024-10-25 10:00', level: 120 },
-//         { time: '2024-10-25 11:00', level: 150 },
-//         { time: '2024-10-25 12:00', level: 95 },
-//         { time: '2024-10-25 13:00', level: 110 }
-//     ];
-
-//     // Render trang history và truyền dữ liệu mẫu vào
-//     res.render('pages/history', { gasHistory: sampleData });
-// });
-
-// app.get('/dashboard', (req, res) => {
-//     res.render("pages/dashboard.pug")
-// })
-
-// app.get('/register', (req, res) => {
-//     res.render("pages/register.pug")
-// })
-
-// app.get('/forgot-password', (req, res) => {
-//     res.render("pages/forgot-password.pug")
-// })
-
+// Khởi tạo route
+route(app);
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-})
+    console.log(`Example app listening on port ${port}`);
+});
