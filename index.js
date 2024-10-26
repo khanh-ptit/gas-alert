@@ -13,18 +13,24 @@ const port = process.env.PORT || 3000; // Thêm giá trị dự phòng cho cổn
 const route = require("./routes/index.route");
 
 // Cấu hình view engine Pug
-app.set("views", "./views");
+app.set("views", `${__dirname}/views`)
 app.set("view engine", "pug");
 
 // Middleware để xử lý dữ liệu từ form và ghi đè phương thức
-app.use(express.static('public'));
-app.use(methodOverride('_method'));  // Đặt trước express.json() và express.urlencoded()
-app.use(express.urlencoded({ extended: true }));
+app.use(express.static(`${__dirname}/public`))
+app.use(methodOverride('_method')); // Đặt trước express.json() và express.urlencoded()
+app.use(express.urlencoded({
+    extended: true
+}));
 app.use(express.json());
 
 // Flash
 app.use(cookieParser('tomcacto'));
-app.use(session({ cookie: { maxAge: 60000 }}));
+app.use(session({
+    cookie: {
+        maxAge: 60000
+    }
+}));
 app.use(flash());
 // End flash
 
