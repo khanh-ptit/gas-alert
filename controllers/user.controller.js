@@ -183,3 +183,29 @@ module.exports.logOut = (req, res) => {
     req.flash("success", "Đăng xuất thành công !")
     res.redirect("/user/login")
 }
+
+// [GET] /user/info
+module.exports.info = (req, res) => {
+    const user = res.locals.user
+    const createdAt = new Date(user.createdAt)
+    
+    // Extract day, month, and year as numbers
+    const day = createdAt.getDate()       // Day of the month (1-31)
+    const month = createdAt.getMonth() + 1 // Month (0-11), so add 1 to get 1-12
+    const year = createdAt.getFullYear()   // Full year (e.g., 2023)
+
+    res.render("pages/user/info.pug", {
+        user: user,
+        day: day,
+        month: month,
+        year: year
+    })
+}
+
+// [GET] /user/edit
+module.exports.edit = (req, res) => {
+    const user = res.locals.user
+    res.render("pages/user/edit.pug", {
+        user: user
+    })
+}

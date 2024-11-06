@@ -26,4 +26,8 @@ router.post("/login", controller.loginPost)
 
 router.get("/logout", controller.logOut)
 
+router.get("/info", authMiddleware.requireAuth, controller.info)
+
+router.get("/edit", authMiddleware.requireAuth, controller.edit)
+
 module.exports = router
