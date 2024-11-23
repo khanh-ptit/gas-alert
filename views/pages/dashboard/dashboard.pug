@@ -1,32 +1,83 @@
+//- extends ../../layouts/main
+
+//- block content
+//-     .container.my-5
+//-         h2.text-center.mb-4 Giám Sát Nồng Độ Khí Gas
+
+//-         .row
+//-             .col-md-6.offset-md-3
+//-                 .card.mb-4
+//-                     .card-body
+//-                         h5.card-title.text-center Nồng Độ Khí Gas Hiện Tại
+//-                         p.card-text.text-center.display-4#gasLevelText N/A
+//-                         .alert.alert-danger#alertText.hidden.mt-3.text-center
+
+//-         .row
+//-             .col-md-12
+//-                 .card
+//-                     .card-body
+//-                         h5.card-title.text-center Nồng Độ Khí Gas Theo Thời Gian
+//-                         .chart-container
+//-                             canvas#gasLevelChart(width="100%" height="40")
+
+//-     script(src="/socket.io/socket.io.js")
+//-     script(src="/js/dashboard.js")
+
 extends ../../layouts/main
-include ../../mixins/alert.pug
 
 block content
-    +alert-success(5000)
-    +alert-error(5000)
-
     .container.my-5
         h2.text-center.mb-4 Giám Sát Nồng Độ Khí Gas
 
-        //- Current Gas Level Card
-        .row
+        //- Trạng thái kết nối và cảnh báo
+        .row.mb-4
+            .col-md-6
+                .card
+                    .card-body
+                        h5.card-title.text-center Trạng Thái Kết Nối
+                        .led#connectionLed Đèn Kết Nối (Xanh: Kết nối thành công, Đỏ: Mất kết nối)
+            .col-md-6
+                .card
+                    .card-body
+                        h5.card-title.text-center Trạng Thái Cảnh Báo
+                        .led#alertLed Đèn Cảnh Báo (Tắt: Bình thường, Đỏ: Cảnh báo)
+
+        //- Công tắc bật/tắt chế độ hoạt động
+        .row.mb-4
             .col-md-6.offset-md-3
-                .card.mb-4
+                .card
+                    .card-body
+                        h5.card-title.text-center Công Tắc Hoạt Động
+                        .text-center
+                            button.btn.btn-primary#toggleModeButton Bật/Tắt Chế Độ Hoạt Động
+
+        //- Điều chỉnh ngưỡng cảnh báo
+        .row.mb-4
+            .col-md-6.offset-md-3
+                .card
+                    .card-body
+                        h5.card-title.text-center Điều Chỉnh Ngưỡng Cảnh Báo
+                        .text-center
+                            input#thresholdSlider(type="range" min="300" max="1000" step="10" value="600")
+                        p.text-center#thresholdValue.text-muted.mt-2 Ngưỡng Cảnh Báo Hiện Tại: 600 ppm
+
+        //- Hiển thị nồng độ khí gas
+        .row.mb-4
+            .col-md-6.offset-md-3
+                .card
                     .card-body
                         h5.card-title.text-center Nồng Độ Khí Gas Hiện Tại
-                        p.card-text.text-center.display-4 #{currentGasLevel}160 ppm
-                        if (alert)
-                            .alert.alert-danger.mt-3.text-center Nồng độ khí gas vượt ngưỡng an toàn!
+                        p.card-text.text-center.display-4#gasLevelText N/A
+                        .alert.alert-danger#alertText.hidden.mt-3.text-center
 
-        //- Line Chart Section
+        //- Biểu đồ nồng độ khí gas theo thời gian
         .row
             .col-md-12
                 .card
                     .card-body
                         h5.card-title.text-center Nồng Độ Khí Gas Theo Thời Gian
                         .chart-container
-                            canvas#gasLevelChart(width="100%" height="40") 
+                            canvas#gasLevelChart(width="100%" height="40")
 
-
-    script(src="/js/dashboard.js") 
-            
+    script(src="/socket.io/socket.io.js")
+    script(src="/js/dashboard.js")

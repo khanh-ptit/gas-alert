@@ -4,3 +4,26 @@
     height: 400px; /* Chiều cao cố định */
     width: 100%; /* Chiều rộng đầy đủ */
 }
+.led {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline;
+    margin: 10px;
+    /* background-color: grey; Mặc định là tắt */
+}
+
+.led.green {
+    background-color: green;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.led.red {
+    background-color: red;
+}
+
+.led.yellow {
+    background-color: yellow;
+}
