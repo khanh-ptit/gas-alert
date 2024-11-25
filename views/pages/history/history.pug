@@ -1,4 +1,5 @@
 extends ../../layouts/main
+include ../../mixins/pagination.pug
 
 block content
     .container.my-5
@@ -6,10 +7,16 @@ block content
         table.table.table-bordered.mt-3
             thead
                 tr
-                    th Thời Gian
-                    th Nồng Độ Khí Gas (ppm)
+                    th Mã lịch sử
+                    th Nồng độ khí gas (ppm)
+                    th Trạng thái cảnh báo
+                    th Thời gian
             tbody
-                each record in gasHistory
+                each history in gasHistory
                     tr
-                        td= record.time
-                        td= record.level
+                        td= history._id
+                        td= history.gasLevel
+                        td= history.alertStatus
+                        td= new Date(history.timestamp).toLocaleString()
+
+    +pagination(pagination)

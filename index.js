@@ -30,7 +30,7 @@ app.use(express.json());
 // Flash
 app.use(cookieParser('tomcacto'));
 app.use(session({
-    cookie: { maxAge: 60000 },
+    cookie: { maxAge: 24 * 60 * 60 * 1000 }, // 1 ngày
     secret: 'tomcacto',
     resave: false,
     saveUninitialized: true,

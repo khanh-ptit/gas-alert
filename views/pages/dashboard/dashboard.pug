@@ -30,27 +30,36 @@ block content
         h2.text-center.mb-4 Giám Sát Nồng Độ Khí Gas
 
         //- Trạng thái kết nối và cảnh báo
+        //- .row.mb-4
+        //-     .col-md-6
+        //-         .card
+        //-             .card-body
+        //-                 h5.card-title.text-center Trạng Thái Kết Nối
+        //-                 .led#connectionLed Đèn Kết Nối (Xanh: Kết nối thành công, Đỏ: Mất kết nối)
+        //-     .col-md-6
+        //-         .card
+        //-             .card-body
+        //-                 h5.card-title.text-center Trạng Thái Cảnh Báo
+        //-                 .led#alertLed Đèn Cảnh Báo (Tắt: Bình thường, Đỏ: Cảnh báo)
         .row.mb-4
             .col-md-6
                 .card
                     .card-body
                         h5.card-title.text-center Trạng Thái Kết Nối
-                        .led#connectionLed Đèn Kết Nối (Xanh: Kết nối thành công, Đỏ: Mất kết nối)
+                        p.text-center#connectionStatus.text-muted
+                        .text-center
+                            .led#connectionLed
+
             .col-md-6
                 .card
                     .card-body
                         h5.card-title.text-center Trạng Thái Cảnh Báo
-                        .led#alertLed Đèn Cảnh Báo (Tắt: Bình thường, Đỏ: Cảnh báo)
-
-        //- Công tắc bật/tắt chế độ hoạt động
-        .row.mb-4
-            .col-md-6.offset-md-3
-                .card
-                    .card-body
-                        h5.card-title.text-center Công Tắc Hoạt Động
+                        p.text-center#alertStatus.text-muted Không có cảnh báo
                         .text-center
-                            button.btn.btn-primary#toggleModeButton Bật/Tắt Chế Độ Hoạt Động
+                            .led#alertLed.hidden.red
 
+
+               
         //- Điều chỉnh ngưỡng cảnh báo
         .row.mb-4
             .col-md-6.offset-md-3
@@ -60,6 +69,8 @@ block content
                         .text-center
                             input#thresholdSlider(type="range" min="300" max="1000" step="10" value="600")
                         p.text-center#thresholdValue.text-muted.mt-2 Ngưỡng Cảnh Báo Hiện Tại: 600 ppm
+
+
 
         //- Hiển thị nồng độ khí gas
         .row.mb-4

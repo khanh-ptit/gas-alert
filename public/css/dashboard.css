@@ -1,29 +1,38 @@
-/* styles.css */
+.hidden {
+    display: none !important;
+}
+
 .chart-container {
     position: relative;
     height: 400px; /* Chiều cao cố định */
     width: 100%; /* Chiều rộng đầy đủ */
 }
+
+/* LED styles */
 .led {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    display: inline;
+    width: 30px; /* Đảm bảo chiều rộng */
+    height: 30px; /* Đảm bảo chiều cao bằng nhau */
+    border-radius: 50%; /* Tạo hình tròn */
+    display: block;
     margin: 10px;
-    /* background-color: grey; Mặc định là tắt */
+    border: 2px solid #ccc; /* Viền nhẹ để hiển thị rõ ràng hơn */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Tạo hiệu ứng ánh sáng */
+    background-color: grey; /* Mặc định là tắt */
 }
 
 .led.green {
+    margin: 0 auto;
     background-color: green;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
+    box-shadow: 0 0 10px green; /* Hiệu ứng ánh sáng khi đèn bật */
 }
 
 .led.red {
+    margin: 0 auto;
     background-color: red;
+    box-shadow: 0 0 10px red;
 }
 
 .led.yellow {
     background-color: yellow;
+    box-shadow: 0 0 10px yellow;
 }

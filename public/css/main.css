@@ -34,3 +34,63 @@
     margin-left: 10px;
 }
 /* End Show Alert */
+
+/* Pagination */
+/* Style chung cho pagination */
+.pagination-container {
+    display: flex;
+    justify-content: center; /* Căn giữa pagination */
+    align-items: center;
+    margin: 20px 0; /* Khoảng cách trên dưới */
+}
+
+.pagination {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 5px; /* Khoảng cách giữa các trang */
+}
+
+.page-item {
+    border-radius: 5px; /* Bo góc cho các trang */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển động khi hover */
+}
+
+.page-item:hover {
+    background-color: #f0f0f0; /* Màu nền nhẹ khi hover */
+    transform: scale(1.1); /* Phóng to nhẹ khi hover */
+}
+
+/* Style cho nút trang */
+.page-link {
+    padding: 8px 12px;
+    color: #007bff; /* Màu xanh cho các nút */
+    text-decoration: none;
+    border: 1px solid #ddd; /* Viền nhẹ */
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: white;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Hiệu ứng chuyển động */
+}
+
+/* Style cho nút trang đang được chọn (active) */
+.page-item.active .page-link {
+    background-color: #007bff; /* Màu nền xanh khi chọn trang */
+    color: white; /* Màu chữ trắng khi trang được chọn */
+    border-color: #007bff; /* Màu viền xanh khi chọn */
+}
+
+/* Style cho nút "Trang trước" và "Kế tiếp" */
+.page-item button {
+    font-weight: bold;
+}
+
+/* Style cho nút "Trang trước" và "Kế tiếp" khi hover */
+.page-item button:hover {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+/* End pagination */

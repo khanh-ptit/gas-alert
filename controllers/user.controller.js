@@ -173,6 +173,19 @@ module.exports.loginPost = async (req, res) => {
     }
     res.cookie("token", user.token)
     res.locals.user = user
+    req.session.user = {
+        email: user.email,
+
+    };
+    req.session.save((err) => {
+        if (err) {
+            console.error("Lỗi khi lưu session:", err);
+        } else {
+            console.log("Session saved:", req.session);
+            // req.flash("success", "Đăng nhập thành công!");
+            // res.redirect("/dashboard");
+        }
+    });    
     req.flash("success", "Đăng nhập thành công !")
     res.redirect("/dashboard")
 }
