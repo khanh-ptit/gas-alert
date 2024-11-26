@@ -48,5 +48,6 @@ module.exports.create = async (req, res) => {
 
 // [POST] /device-management/create
 module.exports.createPost = async (req, res) => {
-    
+    console.log(req.body)
+    res.send("OK")
 }
