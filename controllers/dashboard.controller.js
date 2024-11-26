@@ -35,7 +35,9 @@ let lastSaveTime = null; // Biến lưu thời gian của lần lưu trước đ
 // [GET] /dashboard - Hiển thị giao diện Dashboard
 module.exports.index = (req, res) => {
     console.log("Session data:", req.session);
-    res.render("pages/dashboard/dashboard.pug");
+    res.render("pages/dashboard/dashboard.pug", {
+        pageTitle: "Trang Tổng Quan"
+    });
 };
 
 // [POST] /dashboard - Nhận dữ liệu từ NodeMCU
@@ -62,7 +64,7 @@ module.exports.updateGasData = async (req, res) => {
                         alertStatus: alert_status,
                         timestamp: now
                     });
-                    await gasHistory.save(); // Lưu vào cơ sở dữ liệu
+                    // await gasHistory.save(); // Lưu vào cơ sở dữ liệu
                     console.log(gasHistory);
                     console.log("Lịch sử khí gas đã được lưu.");
 

@@ -31,7 +31,7 @@ module.exports.index = async (req, res) => {
         res.render("pages/history/history.pug", { 
             gasHistory: gasHistory,
             pagination: objectPagination,
-            
+            pageTitle: "Lịch sử"
         });
     } catch (error) {
         console.error("Error in fetching gas history:", error.message);

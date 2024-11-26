@@ -211,7 +211,8 @@ module.exports.info = (req, res) => {
         user: user,
         day: day,
         month: month,
-        year: year
+        year: year,
+        pageTitle: "Thông tin tài khoản"
     })
 }
 
@@ -219,6 +220,7 @@ module.exports.info = (req, res) => {
 module.exports.edit = (req, res) => {
     const user = res.locals.user
     res.render("pages/user/edit.pug", {
-        user: user
+        user: user,
+        pageTitle: "Chỉnh sửa tài khoản"
     })
 }

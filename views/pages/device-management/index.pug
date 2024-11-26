@@ -1,0 +1,31 @@
+extends ../../layouts/main.pug
+
+block content
+    .container.my-5
+        h2.text-center.mb-4 Quản Lý Thiết Bị Cảnh Báo Khí Gas
+        
+        //- // Button Thêm thiết bị
+        .text-right.mb-4
+            a.btn.btn-primary(href="/device-management/create") Thêm Thiết Bị Mới
+        
+        //- // Bảng danh sách thiết bị
+        table.table.table-bordered.mt-3
+            thead
+                tr
+                    th Tên Thiết Bị
+                    th Trạng Thái
+                    th Ngày Thêm
+                    th Thao Tác
+            tbody
+                each device in devices
+                    tr
+                        td= device.deviceName
+                        td
+                            if device.isActive
+                                span.badge.badge-success Đang Hoạt Động
+                            else
+                                span.badge.badge-danger Ngừng Hoạt Động
+                        td= new Date(device.createdAt).toLocaleString()
+                        td
+                            a.btn.btn-warning.btn-sm(href=`/device-management/edit/${device._id}`) Sửa
+                            a.btn.btn-danger.btn-sm.ml-2(href=`/device-management/delete/${device._id}`) Xóa
