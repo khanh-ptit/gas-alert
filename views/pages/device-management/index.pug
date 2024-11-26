@@ -1,31 +1,63 @@
 extends ../../layouts/main.pug
+include ../../mixins/alert.pug
+include ../../mixins/pagination.pug
 
 block content
+    +alert-success(5000)
+    +alert-error(5000)
+
     .container.my-5
         h2.text-center.mb-4 Quản Lý Thiết Bị Cảnh Báo Khí Gas
         
         //- // Button Thêm thiết bị
         .text-right.mb-4
-            a.btn.btn-primary(href="/device-management/create") Thêm Thiết Bị Mới
+            a.btn.btn-primary(href="/device-management/create")
+                i.fas.fa-plus-circle.mr-1
+                | Thêm Thiết Bị Mới
         
         //- // Bảng danh sách thiết bị
-        table.table.table-bordered.mt-3
-            thead
-                tr
-                    th Tên Thiết Bị
-                    th Trạng Thái
-                    th Ngày Thêm
-                    th Thao Tác
+        table.table.table-striped.table-hover.mt-3
+            thead.thead-dark
+                tr.text-center
+                    th(style="width: 10%;") Hình ảnh
+                    th(style="width: 25%;") Tên Thiết Bị
+                    th(style="width: 15%;") Trạng Thái
+                    th(style="width: 20%;") Ngày Thêm
+                    th(style="width: 20%;") Thao Tác
             tbody
                 each device in devices
-                    tr
-                        td= device.deviceName
+                    tr.text-center
+                        // Hiển thị hình ảnh (nếu có), nếu không hiển thị một placeholder
+                        td
+                            if device.thumbnail
+                                img(src=device.thumbnail, alt="Hình ảnh thiết bị", class="img-thumbnail", style="width: 75px; height: auto;")
+                            else
+                                img(src="/images/placeholder.png", alt="Placeholder", class="img-thumbnail", style="width: 75px; height: auto;")
+                        
+                        // Tên thiết bị
+                        td.text-left= device.name
+
+                        // Trạng thái hoạt động
                         td
                             if device.isActive
-                                span.badge.badge-success Đang Hoạt Động
+                                span.badge.badge-success
+                                    i.fas.fa-check-circle.mr-1
+                                    | Đang Hoạt Động
                             else
-                                span.badge.badge-danger Ngừng Hoạt Động
+                                span.badge.badge-danger
+                                    i.fas.fa-times-circle.mr-1
+                                    | Ngừng Hoạt Động
+
+                        // Ngày thêm thiết bị
                         td= new Date(device.createdAt).toLocaleString()
+
+                        // Các hành động (Sửa và Xóa)
                         td
-                            a.btn.btn-warning.btn-sm(href=`/device-management/edit/${device._id}`) Sửa
-                            a.btn.btn-danger.btn-sm.ml-2(href=`/device-management/delete/${device._id}`) Xóa
+                            a.btn.btn-warning.btn-sm.mr-2(href=`/device-management/edit/${device._id}`)
+                                i.fas.fa-edit.mr-1
+                                | Sửa
+                            a.btn.btn-danger.btn-sm(href=`/device-management/delete/${device._id}`)
+                                i.fas.fa-trash-alt.mr-1
+                                | Xóa
+
+    +pagination(pagination)

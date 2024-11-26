@@ -7,7 +7,7 @@ const deviceSchema = new mongoose.Schema({
     }, 
     status: {
         type: String,
-        default: "active"
+        default: "inactive"
     },
     deleted: {
         type: Boolean,
