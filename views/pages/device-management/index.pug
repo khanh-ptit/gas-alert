@@ -10,10 +10,10 @@ block content
         h2.text-center.mb-4 Quản Lý Thiết Bị Cảnh Báo Khí Gas
         
         //- // Button Thêm thiết bị
-        .text-right.mb-4
-            a.btn.btn-primary(href="/device-management/create")
-                i.fas.fa-plus-circle.mr-1
-                | Thêm Thiết Bị Mới
+        //- .text-right.mb-4
+        //-     a.btn.btn-primary(href="/device-management/create")
+        //-         i.fas.fa-plus-circle.mr-1
+        //-         | Thêm Thiết Bị Mới
         
         //- // Bảng danh sách thiết bị
         table.table.table-striped.table-hover.mt-3
@@ -56,8 +56,19 @@ block content
                             a.btn.btn-warning.btn-sm.mr-2(href=`/device-management/edit/${device._id}`)
                                 i.fas.fa-edit.mr-1
                                 | Sửa
-                            a.btn.btn-danger.btn-sm(href=`/device-management/delete/${device._id}`)
+                            button(
+                                class="btn btn-danger btn-sm"
+                                data-id=device.id
+                                button-delete)
                                 i.fas.fa-trash-alt.mr-1
                                 | Xóa
+    form(
+        action=""
+        method="POST"
+        id="form-delete-item"
+        data-path=`device-management/delete`
+    )
 
     +pagination(pagination)
+
+    script(src="/js/device.js") 

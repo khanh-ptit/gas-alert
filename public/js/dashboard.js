@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const isOn = manualSwitch.checked;
         console.log("*");
         switchStatus.textContent = `Trạng thái: ${isOn ? "Bật" : "Tắt"}`;
-    
+
         // Thực hiện hành động khi công tắc thay đổi
         if (isOn) {
             console.log("Hệ thống được kích hoạt thủ công.");
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log("Hệ thống được tắt thủ công.");
         }
     });
-    
+
 
     // Biểu đồ hiển thị nồng độ khí gas theo thời gian
     const ctxLineChart = document.getElementById('gasLevelChart').getContext('2d');
@@ -158,6 +158,25 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .catch((error) => console.error('Error updating threshold:', error));
     });
+
+    // // thêm vào
+    // // API GET: Lấy ngưỡng hiện tại
+    // app.get('/api/threshold', (req, res) => {
+    //     res.json({ threshold: currentThreshold });
+    // });
+
+    // // API POST: Cập nhật ngưỡng mới
+    // app.post('/api/threshold', (req, res) => {
+    //     const { newThreshold } = req.body;
+    //     if (newThreshold && newThreshold >= 300 && newThreshold <= 1000) {
+    //         currentThreshold = newThreshold;
+    //         console.log('Ngưỡng mới:', currentThreshold);
+    //         res.json({ success: true, threshold: currentThreshold });
+    //     } else {
+    //         res.status(400).json({ success: false, message: 'Giá trị ngưỡng không hợp lệ.' });
+    //     }
+    // });
+    // //
 
     // Hàm: Cập nhật giao diện Dashboard
     function updateDashboard(gasLevel, threshold) {

@@ -1,5 +1,6 @@
 const Device = require("../models/device.model"); 
 const paginationHelper = require("../helpers/pagination")
+
 // [GET] /device-management
 module.exports.index = async (req, res) => {
     try {
@@ -48,4 +49,16 @@ module.exports.createPost = async (req, res) => {
     await newDevice.save()
     req.flash("success", "Tạo mới thiết bị thành công!")
     res.redirect("/device-management")
+}
+
+// [DELETE] /device-management/delete/:id
+module.exports.delete = async (req, res) => {
+    const id = req.params.id;
+    await Device.updateOne({
+        _id: id
+    }, {
+        deleted: true
+    })
+    req.flash("success", "Xóa thiết bị thành công!")
+    res.redirect("back")
 }

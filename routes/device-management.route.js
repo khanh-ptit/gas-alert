@@ -13,4 +13,6 @@ router.get("/create", authMiddleware.requireAuth, controller.create)
 
 router.post("/create", upload.single("thumbnail"), uploadCloud.upload, authMiddleware.requireAuth, controller.createPost) 
 
+router.delete("/delete/:id", authMiddleware.requireAuth, controller.delete)
+
 module.exports = router
