@@ -1,0 +1,16 @@
+mixin sort(prefix)
+    .col-4 
+        div(sort)
+            .sort
+                select(
+                    class="form-control"
+                    name="sort"
+                    sort-select
+                )
+                    option(disabled selected) ---Sắp xếp theo---
+                    option(value="createdAt-asc") Tạo sớm nhất 
+                    option(value="createdAt-desc") Tạo mới nhất 
+                button(
+                    class="btn btn-danger mt-2"
+                    sort-clear
+                ) Xóa

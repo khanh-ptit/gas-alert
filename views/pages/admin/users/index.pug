@@ -1,0 +1,130 @@
+extends ../../../layouts/admin/main
+include ../../../mixins/filter-status.pug
+include ../../../mixins/form-search.pug
+include ../../../mixins/pagination.pug
+include ../../../mixins/sort.pug
+include ../../../mixins/alert.pug
+
+block content
+    +alert-success(5000)
+    +alert-error(5000)
+
+    h1.mb-3.header Danh sách tài khoản
+
+    .card.mb-3 
+        .card-header Bộ lọc và tìm kiếm
+        .card-body 
+            .row    
+                .col-4 
+                    +filter-status(filterStatus)
+                .col-4 
+                    +form-search("users")
+                .col-4 
+                    +sort("accounts") 
+
+
+    .table-responsive
+        table(
+            class="table table-hover table-sm"
+            checkbox-multi
+        )
+            thead
+                tr
+                    th
+                        input(type="checkbox" name="checkall")
+                    th STT
+                    th Hình ảnh
+                    th Họ tên
+                    th Email
+                    th Số lượng thiết bị
+                    th Nhóm quyền
+                    th Trạng thái
+                    th Hành động
+            tbody
+                each item, index in records
+                    tr
+                        //- Cột checkbox
+                        td
+                            input(
+                                type="checkbox"
+                                name="id"
+                                value=item._id
+                            )
+                        
+                        //- Cột STT
+                        td #{index + 1}
+                        
+                        //- Cột Hình ảnh
+                        td
+                            img(
+                                src=item.avatar
+                                alt=item.fullName
+                                width="100px"
+                                height="auto"
+                            )
+                        
+                        //- Cột Họ tên
+                        td #{item.fullName}
+                        
+                        //- Cột Email
+                        td #{item.email}
+                        
+                        //- Cột Số lượng thiết bị
+                        td #{item.numberDevice || 0} 
+
+                        //- Cột Nhóm quyền
+                        td #{item.role || 'Người dùng'}
+                        
+                        //- Cột Trạng thái
+                        td
+                            if (!item.deleted)
+                                a(
+                                    href="javascript:;"
+                                    data-status="active"
+                                    data-id=item._id
+                                    button-change-status
+                                    class="badge badge-success"
+                                ) Hoạt động
+                            else
+                                a(
+                                    href="javascript:;"
+                                    data-status="inactive"
+                                    data-id=item._id
+                                    button-change-status
+                                    class="badge badge-danger"
+                                ) Dừng hoạt động
+                        
+                        //- Cột Hành động
+                        td
+                            a(
+                                href=`/admin/users/detail/${item._id}`
+                                class="btn btn-secondary btn-sm"
+                            ) Xem
+                            a(
+                                href=`/admin/users/edit/${item._id}`
+                                class="btn btn-warning btn-sm ml-1"
+                            ) Sửa
+                            button(
+                                class="btn btn-danger btn-sm ml-1"
+                                data-id=item._id
+                                button-delete
+                            ) Xóa
+                    
+
+    +pagination(pagination)
+
+    form(
+        action=""
+        method="POST"
+        id="form-change-status"
+        data-path=`admin/users/change-status`
+    )
+
+    form(
+        action=""
+        method="POST"
+        id="form-delete-item"
+        data-path=`admin/users/delete`
+    )
+
+    script(src="/admin/js/user.js") 

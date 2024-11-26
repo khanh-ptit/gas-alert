@@ -1,0 +1,86 @@
+extends ../../../layouts/admin/main
+
+block content
+    .container-fluid
+        h1.text-center.text-primary #{pageTitle}
+
+        // Form chỉnh sửa thông tin người dùng
+        form(action=`/admin/users/edit/${user._id}` method="POST" enctype="multipart/form-data")
+            .row.mb-3
+                label.col-md-2.col-form-label(for="fullName") Họ tên
+                .col-md-10
+                    input#fullName.form-control(type="text" name="fullName" value=user.fullName required)
+
+            .row.mb-3
+                label.col-md-2.col-form-label(for="email") Email
+                .col-md-10
+                    input#email.form-control(type="email" name="email" value=user.email required)
+
+            .row.mb-3
+                label.col-md-2.col-form-label(for="phone") Số điện thoại
+                .col-md-10
+                    input#phone.form-control(type="tel" name="phone" value=user.phone)
+
+            .row.mb-3
+                label.col-md-2.col-form-label(for="address") Địa chỉ
+                .col-md-10
+                    input#address.form-control(type="text" name="address" value=user.address)
+
+            .row.mb-3
+                label.col-md-2.col-form-label(for="numberDevice") Số lượng thiết bị
+                .col-md-10
+                    input#numberDevice.form-control(type="number" name="numberDevice" value=user.numberDevice min="0")
+
+            .row.mb-3
+                label.col-md-2.col-form-label Thiết bị
+                .col-md-10
+                    ul.list-group
+                        each device in user.devices
+                            li.list-group-item.d-flex.align-items-center.justify-content-between
+                                img(src=device.thumbnail alt=device.name width="50px" height="50px")
+                                span.ml-2 #{device.name}
+                                button.btn.btn-danger.btn-sm(type="button" data-id=device._id) Xóa
+
+                    // Dropdown chọn thiết bị
+                    .mt-2
+                        select.form-control(name="deviceId")
+                            option(value="" disabled selected) Chọn thiết bị
+                            each device in devices
+                                option(value=device._id) 
+                                    img(src=device.thumbnail alt=device.name width="30px" height="30px")
+                                    span.ml-2 #{device.name}
+
+            button.btn.btn-primary(type="submit") Lưu thay đổi
+
+    script.
+        document.addEventListener("DOMContentLoaded", () => {
+            const deviceList = document.querySelector(".list-group");
+            const addDeviceBtn = document.querySelector("[button-add-device]");
+            const newDeviceInput = document.querySelector("input[name='newDevice']");
+            const newDeviceThumbnailInput = document.querySelector("input[name='newDeviceThumbnail']");
+
+            // Xóa thiết bị
+            deviceList.addEventListener("click", (e) => {
+                if (e.target.matches("[button-remove-device]")) {
+                    const index = e.target.dataset.index;
+                    e.target.closest("li").remove();
+                }
+            });
+
+            // Thêm thiết bị (có thể tùy chỉnh thêm nếu cần thiết)
+            addDeviceBtn.addEventListener("click", () => {
+                const newDeviceName = newDeviceInput.value.trim();
+                const newDeviceThumbnail = newDeviceThumbnailInput.value.trim();
+                if (newDeviceName && newDeviceThumbnail) {
+                    const li = document.createElement("li");
+                    li.className = "list-group-item d-flex align-items-center justify-content-between";
+                    li.innerHTML =
+                        `<img src="${newDeviceThumbnail}" alt="${newDeviceName}" width="50px" height="50px" />
+                         <span class="ml-2">${newDeviceName}</span>
+                         <button class="btn btn-danger btn-sm" type="button" button-remove-device>Xóa</button>`;
+                    deviceList.appendChild(li);
+                    newDeviceInput.value = "";
+                    newDeviceThumbnailInput.value = "";
+                }
+            });
+        });

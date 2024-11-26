@@ -18,7 +18,18 @@ const userSchema = new mongoose.Schema({
     deleted: {
         type: Boolean,
         default: false
-    }
+    },
+    numberDevice: {
+        type: Number,
+        default: 0
+    },
+    // Lưu mảng các ID thiết bị
+    devices: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Device' // Trỏ tới model 'Device'
+        }
+    ]
 }, {
     timestamps: true
 })

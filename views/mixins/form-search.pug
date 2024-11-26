@@ -1,0 +1,16 @@
+mixin form-search(prefix)
+    form.form-inline.mr-auto.w-100.navbar-search(id="form-search" style="max-width: 400px;")
+        .input-group
+            - var placeholders = { 'products': 'Nhập tên sản phẩm', 'orders': 'Nhập tên khách hàng', 'product-category': 'Nhập tên danh mục', 'users': "Nhập họ tên"}
+            input.form-control.bg-light.border-0.small(
+                type="text" 
+                placeholder=placeholders[prefix] || 'Nhập từ khóa'
+                aria-label="Search" 
+                aria-describedby="basic-addon2" 
+                name="keyword"
+                style="width: calc(100% - 42px);" 
+                value=keyword
+            )
+            .input-group-append
+                button.btn.btn-primary(type="submit" style="width: 42px;")
+                    i.fas.fa-search.fa-sm
