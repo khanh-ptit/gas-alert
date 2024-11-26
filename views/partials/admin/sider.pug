@@ -1,0 +1,43 @@
+ul.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordion(id="accordionSidebar")
+    
+    //- Sidebar - Brand
+    a.sidebar-brand.d-flex.align-items-center.justify-content-center(href="admin/dashboard")
+        div.sidebar-brand-icon.rotate-n-15
+            i.fas.fa-gas-pump
+        div.sidebar-brand-text.mx-3 ADMIN
+
+    hr.sidebar-divider.my-0
+
+    //- Nav Item - Dashboard
+    li.nav-item.active
+        a.nav-link(href="/admin/dashboard")
+            i.fas.fa-fw.fa-tachometer-alt
+            span Tổng quan
+
+    //- Nav Item - Device Management
+    li.nav-item
+        a.nav-link(href="/admin/devices")
+            i.fas.fa-fw.fa-cogs 
+            span Quản lý Thiết bị
+
+    //- Nav Item - User Management
+    li.nav-item
+        a.nav-link(href="/admin/users")
+            i.fas.fa-fw.fa-users  
+            span Quản lý Người dùng
+
+    hr.sidebar-divider
+
+    div.sidebar-heading Tài khoản Admin
+    li.nav-item
+        a.nav-link(href="/admin/profile")
+            i.fas.fa-fw.fa-user-cog
+            span Thông tin cá nhân
+    li.nav-item
+        a.nav-link(href="/admin/settings")
+            i.fas.fa-fw.fa-tools
+            span Cài đặt
+    li.nav-item
+        a.nav-link(href="/admin/logout")
+            i.fas.fa-fw.fa-sign-out-alt
+            span Đăng xuất

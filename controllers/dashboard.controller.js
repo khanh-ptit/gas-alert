@@ -9,7 +9,9 @@ let lastSaveTime = null; // Biến lưu thời gian của lần lưu trước đ
 
 // [GET] /dashboard - Hiển thị giao diện Dashboard
 module.exports.index = (req, res) => {
-    console.log("Session data:", req.session);
+    // console.log("Session data:", req.session);
+    // const email = req.session.email;
+    // console.log(email)
     res.render("pages/dashboard/dashboard.pug", {
         pageTitle: "Trang Tổng Quan"
     });

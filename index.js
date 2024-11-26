@@ -16,6 +16,7 @@ const io = socketIo(server);
 const port = process.env.PORT || 3000;
 
 const route = require("./routes/index.route");
+const routeAdmin = require("./routes/admin/index.route")
 
 // Cấu hình view engine Pug
 app.set("views", `${__dirname}/views`);
@@ -58,13 +59,12 @@ app.get("/api/gas-data", (req, res) => {
 
 // Khởi tạo route
 route(app);
+routeAdmin(app);
 
 // Lắng nghe server
 server.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
-
-
 
 ///
 let isSystemActive = true; // Trạng thái hệ thống mặc định là bật
