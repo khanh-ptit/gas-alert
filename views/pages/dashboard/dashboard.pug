@@ -1,85 +1,63 @@
-//- extends ../../layouts/main
-
-//- block content
-//-     .container.my-5
-//-         h2.text-center.mb-4 Giám Sát Nồng Độ Khí Gas
-
-//-         .row
-//-             .col-md-6.offset-md-3
-//-                 .card.mb-4
-//-                     .card-body
-//-                         h5.card-title.text-center Nồng Độ Khí Gas Hiện Tại
-//-                         p.card-text.text-center.display-4#gasLevelText N/A
-//-                         .alert.alert-danger#alertText.hidden.mt-3.text-center
-
-//-         .row
-//-             .col-md-12
-//-                 .card
-//-                     .card-body
-//-                         h5.card-title.text-center Nồng Độ Khí Gas Theo Thời Gian
-//-                         .chart-container
-//-                             canvas#gasLevelChart(width="100%" height="40")
-
-//-     script(src="/socket.io/socket.io.js")
-//-     script(src="/js/dashboard.js")
-
 extends ../../layouts/main
 
 block content
     .container.my-5
         h2.text-center.mb-4 Giám Sát Nồng Độ Khí Gas
 
-        //- Trạng thái kết nối và cảnh báo
-        //- .row.mb-4
-        //-     .col-md-6
-        //-         .card
-        //-             .card-body
-        //-                 h5.card-title.text-center Trạng Thái Kết Nối
-        //-                 .led#connectionLed Đèn Kết Nối (Xanh: Kết nối thành công, Đỏ: Mất kết nối)
-        //-     .col-md-6
-        //-         .card
-        //-             .card-body
-        //-                 h5.card-title.text-center Trạng Thái Cảnh Báo
-        //-                 .led#alertLed Đèn Cảnh Báo (Tắt: Bình thường, Đỏ: Cảnh báo)
-        .row.mb-4
-            .col-md-6
-                .card
+        //- Hàng trạng thái và điều chỉnh ngưỡng cảnh báo
+        .row.mb-4.align-items-center
+            .col-md-3
+                .card.fixed-height-card
                     .card-body
                         h5.card-title.text-center Trạng Thái Kết Nối
                         p.text-center#connectionStatus.text-muted
                         .text-center
                             .led#connectionLed
 
-            .col-md-6
-                .card
+            .col-md-3
+                .card.fixed-height-card
                     .card-body
                         h5.card-title.text-center Trạng Thái Cảnh Báo
                         p.text-center#alertStatus.text-muted Không có cảnh báo
                         .text-center
                             .led#alertLed.hidden.red
 
-
-               
-        //- Điều chỉnh ngưỡng cảnh báo
-        .row.mb-4
-            .col-md-6.offset-md-3
-                .card
+            .col-md-3
+                .card.fixed-height-card
                     .card-body
-                        h5.card-title.text-center Điều Chỉnh Ngưỡng Cảnh Báo
+                        h5.card-title.text-center Ngưỡng Cảnh Báo
                         .text-center
                             input#thresholdSlider(type="range" min="300" max="1000" step="10" value="600")
-                        p.text-center#thresholdValue.text-muted.mt-2 Ngưỡng Cảnh Báo Hiện Tại: 600 ppm
+                        p.text-center#thresholdValue.text-muted.mt-2 Ngưỡng Cảnh Báo: 600 ppm
 
-
+            .col-md-3
+                .card.fixed-height-card
+                    .card-body
+                        h5.card-title.text-center Bật/Tắt Hệ Thống
+                        .text-center
+                            .switch
+                                input#manualSwitch(type="checkbox")
+                                span.slider
+                        p.text-center.mt-2#switchStatus.text-muted Trạng thái: Tắt
 
         //- Hiển thị nồng độ khí gas
-        .row.mb-4
+        .row.mb-4.d-none
             .col-md-6.offset-md-3
                 .card
                     .card-body
                         h5.card-title.text-center Nồng Độ Khí Gas Hiện Tại
                         p.card-text.text-center.display-4#gasLevelText N/A
                         .alert.alert-danger#alertText.hidden.mt-3.text-center
+
+        .row.mb-4
+            .col-md-6.offset-md-3
+                .card
+                    .card-body
+                        h5.card-title.text-center Nồng Độ Khí Gas Hiện Tại
+                        .text-center
+                            canvas#gasGauge(width="200" height="200")
+                        p.card-text.text-center.mt-3#gasLevelValue N/A ppm
+
 
         //- Biểu đồ nồng độ khí gas theo thời gian
         .row

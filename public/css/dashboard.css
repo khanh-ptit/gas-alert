@@ -1,33 +1,32 @@
+/* Ẩn phần tử nếu cần */
 .hidden {
     display: none !important;
 }
 
+/* Biểu đồ */
 .chart-container {
     position: relative;
     height: 400px; /* Chiều cao cố định */
     width: 100%; /* Chiều rộng đầy đủ */
 }
 
-/* LED styles */
+/* Đèn LED trạng thái */
 .led {
-    width: 30px; /* Đảm bảo chiều rộng */
-    height: 30px; /* Đảm bảo chiều cao bằng nhau */
-    border-radius: 50%; /* Tạo hình tròn */
-    display: block;
-    margin: 10px;
-    border: 2px solid #ccc; /* Viền nhẹ để hiển thị rõ ràng hơn */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Tạo hiệu ứng ánh sáng */
-    background-color: grey; /* Mặc định là tắt */
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    margin: 0 auto;
+    border: 2px solid #ccc;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out;
 }
 
 .led.green {
-    margin: 0 auto;
     background-color: green;
-    box-shadow: 0 0 10px green; /* Hiệu ứng ánh sáng khi đèn bật */
+    box-shadow: 0 0 10px green; /* Hiệu ứng ánh sáng khi bật */
 }
 
 .led.red {
-    margin: 0 auto;
     background-color: red;
     box-shadow: 0 0 10px red;
 }
@@ -35,4 +34,157 @@
 .led.yellow {
     background-color: yellow;
     box-shadow: 0 0 10px yellow;
+}
+
+/* Thẻ card */
+.card {
+    border: none; /* Loại bỏ viền mặc định */
+    border-radius: 10px; /* Góc bo tròn */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Bóng đổ nhẹ */
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Hiệu ứng hover */
+}
+
+/* Thẻ card có chiều cao cố định */
+.fixed-height-card {
+    height: 150px; /* Chiều cao cố định */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Căn giữa nội dung theo chiều dọc */
+    text-align: center; /* Căn giữa nội dung theo chiều ngang */
+    background: linear-gradient(to bottom right, #f8f9fa, #e9ecef); /* Hiệu ứng màu nền nhẹ */
+}
+
+/* Tiêu đề chính */
+h2 {
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #007bff; /* Màu xanh nổi bật */
+    margin-bottom: 20px;
+}
+
+/* Tiêu đề card */
+h5.card-title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #343a40; /* Màu chữ đậm */
+}
+
+/* Văn bản bên trong */
+p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #6c757d; /* Màu chữ xám nhẹ */
+}
+
+/* Thanh trượt ngưỡng */
+input#thresholdSlider {
+    width: 100%;
+    height: 6px;
+    background: #ddd;
+    border-radius: 3px;
+    outline: none;
+    -webkit-appearance: none;
+    transition: background-color 0.3s ease;
+}
+
+input#thresholdSlider:hover {
+    background: #007bff;
+}
+
+input#thresholdSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #007bff;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+input#thresholdSlider::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #007bff;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Gauge */
+#gasGauge {
+    margin: 0 auto; /* Căn giữa */
+    display: block;
+}
+
+/* Văn bản nồng độ khí */
+p#gasLevelValue {
+    font-size: 24px;
+    font-weight: bold;
+    color: #007bff;
+}
+
+/* Công tắc bật/tắt */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #007bff;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* Điều chỉnh thẻ card có chiều cao cố định */
+.fixed-height-card {
+    height: 150px; /* Chiều cao cố định */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Căn giữa nội dung theo chiều dọc */
+    text-align: center; /* Căn giữa nội dung theo chiều ngang */
+}
+
+/* Chiều rộng các cột */
+.row > .col-md-3 {
+    padding: 10px;
 }
