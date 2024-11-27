@@ -7,10 +7,9 @@ html(lang="en")
         meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
         meta(name="description" content="")
         meta(name="author" content="")
-        link(rel="icon" type="image/png" href="https://img.icons8.com/emoji/48/fire.png") 
+        link(rel="icon" type="image/png" href="https://img.icons8.com/color/48/admin-settings-male.png") 
 
-
-        title Đăng nhập hệ thống
+        title Đăng Nhập Quản Trị 
 
         //- Custom fonts for this template
         link(href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css")
@@ -20,9 +19,10 @@ html(lang="en")
         link(href="/css/sb-admin-2.min.css" rel="stylesheet")
         link(rel="stylesheet", href="/css/auth.css")
         link(rel="stylesheet", href="/css/main.css")
+        link(rel="stylesheet", href="/admin/css/auth.css")
 
     body.bg-gradient-primary
-        include ../../mixins/alert.pug
+        include ../../../mixins/alert.pug
         +alert-error(5000)
         +alert-success(5000)
 
@@ -43,7 +43,7 @@ html(lang="en")
                                     .p-5
                                         .text-center
                                             h1.h4.text-gray-900.mb-4 Hệ thống cảnh báo khí gas!
-                                        form(class="user" action="/user/login" method="POST")
+                                        form(class="user" action="/admin/auth/login" method="POST")
                                             .form-group
                                                 input#exampleInputEmail.form-control.form-control-user(type="email" name="email" aria-describedby="emailHelp" placeholder="Nhập email")
                                             .form-group
@@ -60,12 +60,7 @@ html(lang="en")
                                             a.btn.btn-facebook.btn-user.btn-block(href="index.html")
                                                 i.fab.fa-facebook-f.fa-fw
                                                 | Đăng nhập với Facebook
-                                        hr
-                                        .text-center
-                                            a.small(href="/user/forgot-password") Quên mật khẩu?
-                                        .text-center
-                                            a.small(href="/user/register") Chưa có tài khoản? Đăng ký ngay!
-
+                                        
         //- Bootstrap core JavaScript
         script(src="/vendor/jquery/jquery.min.js")
         script(src="/vendor/bootstrap/js/bootstrap.bundle.min.js")

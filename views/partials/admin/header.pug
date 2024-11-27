@@ -50,16 +50,13 @@ nav.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top.shadow
         //- Nav Item - User Information
         li.nav-item.dropdown.no-arrow
             a.nav-link.dropdown-toggle(href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
-                span.mr-2.d-none.d-lg-inline.text-gray-600.small Lê Quốc Khánh
-                img.img-profile.rounded-circle(src="https://cellphones.com.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg")
+                span.mr-2.d-none.d-lg-inline.text-gray-600.small #{account.fullName}
+                img.img-profile.rounded-circle(src=account.avatar)
             div.dropdown-menu.dropdown-menu-right.shadow.animated--grow-in(aria-labelledby="userDropdown")
-                a.dropdown-item(href="/user/info")
+                a.dropdown-item(href="/admin/info")
                     i.fas.fa-user.fa-sm.fa-fw.mr-2.text-gray-400 
                     | Thông tin tài khoản
-                a.dropdown-item(href="#")
-                    i.fas.fa-cogs.fa-sm.fa-fw.mr-2.text-gray-400
-                    | Cài đặt
                 div.dropdown-divider
-                a.dropdown-item(href="/user/logout")
+                a.dropdown-item(href="/admin/auth/logout")
                     i.fas.fa-sign-out-alt.fa-sm.fa-fw.mr-2.text-gray-400
                     | Đăng xuất

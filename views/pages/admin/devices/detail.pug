@@ -1,0 +1,54 @@
+extends ../../../layouts/admin/main.pug
+include ../../../mixins/alert.pug
+
+block content
+    +alert-success(5000)
+    +alert-error(5000)
+
+    h1.mb-4.text-center.header.text-primary Chi tiết thiết bị
+
+    .card.shadow.rounded.p-4.bg-white
+        //- Tên thiết bị
+        div(class="form-group mb-3")
+            label(for="name" class="fw-bold") Tên Thiết Bị:
+            h2.mb-0 #{device.name || 'N/A'}
+
+        //- Trạng thái
+        div(class="form-group mb-3")
+            label(for="status" class="fw-bold") Trạng Thái:
+            p.mb-0
+                if device.status == "active"
+                    span(class="badge badge-success") Hoạt động
+                else
+                    span(class="badge badge-danger") Dừng hoạt động
+
+        //- Ảnh thiết bị
+        div(class="form-group mb-3")
+            label(for="thumbnail" class="fw-bold") Ảnh:
+            div.mt-2.d-flex.align-items-center
+                if device.thumbnail
+                    img(
+                        src=device.thumbnail
+                        class="rounded border"
+                        style="width: 150px; height: 150px; object-fit: cover;"
+                    )
+                else
+                    span.text-muted Chưa có ảnh
+
+        //- Ngày tạo
+        div(class="form-group mb-3")
+            label(for="createdAt" class="fw-bold") Ngày Tạo:
+            p.mb-0 #{device.createdAt ? new Date(device.createdAt).toLocaleDateString() : 'N/A'}
+
+        //- Ngày cập nhật
+        div(class="form-group mb-3")
+            label(for="updatedAt" class="fw-bold") Ngày Cập Nhật:
+            p.mb-0 #{device.updatedAt ? new Date(device.updatedAt).toLocaleDateString() : 'N/A'}
+
+        //- Nút quay lại
+        div(class="text-center mt-4")
+            a(
+                href="/admin/devices"
+                class="btn btn-secondary px-4"
+            ) Quay lại danh sách
+

@@ -115,3 +115,15 @@ module.exports.editPatch = async (req, res) => {
     req.flash("success", "Cập nhật thành công thiết bị !")
     res.redirect("back")
 }
+
+// [GET] /admin/devices/detail/:id
+module.exports.detail = async (req, res) => {
+    const id = req.params.id
+    const device = await Device.findOne({
+        _id: id
+    })
+    res.render("pages/admin/devices/detail.pug", {
+        pageTitle: "Chi tiết thiết bị",
+        device: device
+    })
+}
