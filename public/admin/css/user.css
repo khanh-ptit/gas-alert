@@ -1,0 +1,15 @@
+.img-thumbnail {
+    max-width: 150px;
+    max-height: 150px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+button:hover {
+    background-color: #0056b3; /* Màu xanh đậm hơn */
+    color: #fff;
+}
+
+button:active {
+    transform: scale(0.98);
+}

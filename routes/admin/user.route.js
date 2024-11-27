@@ -8,4 +8,6 @@ router.get("/", controller.index);
 
 router.get("/edit/:id", controller.edit)
 
+router.post("/edit/:id", controller.editPatch)
+
 module.exports = router;

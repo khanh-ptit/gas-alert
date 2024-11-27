@@ -1,86 +1,156 @@
 extends ../../../layouts/admin/main
+include ../../../mixins/alert.pug
 
 block content
+    +alert-success(5000)
+    +alert-error(5000)
+    
     .container-fluid
-        h1.text-center.text-primary #{pageTitle}
+        //- Form chỉnh sửa thông tin người dùng
+        form(action=`/admin/users/edit/${user._id}` method="POST")
+            //- Thông tin cá nhân
+            fieldset.border.p-3.mb-4
+                legend.text-primary.font-weight-bold Thông tin cá nhân
+                .row.mb-3
+                    label.col-md-2.col-form-label(for="fullName") Họ tên
+                    .col-md-10
+                        input#fullName.form-control(type="text" name="fullName" value=user.fullName required)
 
-        // Form chỉnh sửa thông tin người dùng
-        form(action=`/admin/users/edit/${user._id}` method="POST" enctype="multipart/form-data")
-            .row.mb-3
-                label.col-md-2.col-form-label(for="fullName") Họ tên
-                .col-md-10
-                    input#fullName.form-control(type="text" name="fullName" value=user.fullName required)
+                .row.mb-3
+                    label.col-md-2.col-form-label(for="email") Email
+                    .col-md-10
+                        input#email.form-control(type="email" name="email" value=user.email required)
 
-            .row.mb-3
-                label.col-md-2.col-form-label(for="email") Email
-                .col-md-10
-                    input#email.form-control(type="email" name="email" value=user.email required)
+                .row.mb-3
+                    label.col-md-2.col-form-label(for="phone") Số điện thoại
+                    .col-md-10
+                        input#phone.form-control(type="tel" name="phone" value=user.phone)
 
-            .row.mb-3
-                label.col-md-2.col-form-label(for="phone") Số điện thoại
-                .col-md-10
-                    input#phone.form-control(type="tel" name="phone" value=user.phone)
+                .row.mb-3
+                    label.col-md-2.col-form-label(for="address") Địa chỉ
+                    .col-md-10
+                        input#address.form-control(type="text" name="address" value=user.address)
 
-            .row.mb-3
-                label.col-md-2.col-form-label(for="address") Địa chỉ
-                .col-md-10
-                    input#address.form-control(type="text" name="address" value=user.address)
+            //- Danh sách thiết bị
+            fieldset.border.p-3.mb-4
+                legend.text-primary.font-weight-bold Danh sách thiết bị
+                .device-list
+                    each device, index in user.devices
+                        .device-item.card.shadow.mb-3
+                            .card-body
+                                .row
+                                    .col-md-4
+                                        label(for=`device_${index}`) Tên thiết bị
+                                        p.form-control-plaintext #{device.name}
 
-            .row.mb-3
-                label.col-md-2.col-form-label(for="numberDevice") Số lượng thiết bị
-                .col-md-10
-                    input#numberDevice.form-control(type="number" name="numberDevice" value=user.numberDevice min="0")
+                                    .col-md-4
+                                        label(for=`deviceThumbnail_${index}`) Ảnh thiết bị:   
+                                        img.img-thumbnail(
+                                            id=`deviceThumbnail_${index}`
+                                            src=device.thumbnail
+                                            alt=device.name
+                                            width="100px"
+                                        )
 
-            .row.mb-3
-                label.col-md-2.col-form-label Thiết bị
-                .col-md-10
-                    ul.list-group
-                        each device in user.devices
-                            li.list-group-item.d-flex.align-items-center.justify-content-between
-                                img(src=device.thumbnail alt=device.name width="50px" height="50px")
-                                span.ml-2 #{device.name}
-                                button.btn.btn-danger.btn-sm(type="button" data-id=device._id) Xóa
+                                    .col-md-4.text-right
+                                        button.btn.btn-danger.btn-sm(
+                                            type="button"
+                                            data-index=index
+                                            button-remove-device
+                                        )
+                                            i.fas.fa-trash-alt
+                                            |  Xóa
 
-                    // Dropdown chọn thiết bị
-                    .mt-2
-                        select.form-control(name="deviceId")
-                            option(value="" disabled selected) Chọn thiết bị
-                            each device in devices
-                                option(value=device._id) 
-                                    img(src=device.thumbnail alt=device.name width="30px" height="30px")
-                                    span.ml-2 #{device.name}
+                button#addDeviceBtn.btn.btn-info.btn-sm.mt-3(type="button")
+                    i.fas.fa-plus-circle
+                    |  Thêm thiết bị mới
 
-            button.btn.btn-primary(type="submit") Lưu thay đổi
+            //- Nút lưu
+            .form-group.text-center
+                button.btn.btn-success.btn-lg(type="submit")
+                    i.fas.fa-save
+                    |  Lưu thay đổi
 
     script.
-        document.addEventListener("DOMContentLoaded", () => {
-            const deviceList = document.querySelector(".list-group");
-            const addDeviceBtn = document.querySelector("[button-add-device]");
-            const newDeviceInput = document.querySelector("input[name='newDevice']");
-            const newDeviceThumbnailInput = document.querySelector("input[name='newDeviceThumbnail']");
+        const existingDevices = !{JSON.stringify(user.devices)}; // Dữ liệu thiết bị đã có
+        const allDevices = !{JSON.stringify(devices)}; // Dữ liệu thiết bị khả dụng
+        let deviceIndex = existingDevices.length;
 
-            // Xóa thiết bị
-            deviceList.addEventListener("click", (e) => {
-                if (e.target.matches("[button-remove-device]")) {
-                    const index = e.target.dataset.index;
-                    e.target.closest("li").remove();
-                }
+        document.addEventListener("DOMContentLoaded", () => {
+            const addDeviceBtn = document.getElementById("addDeviceBtn");
+            const deviceList = document.querySelector(".device-list");
+
+            // Hàm thêm thiết bị mới
+            const addDeviceItem = (index) => {
+                const filteredDevices = allDevices.filter(
+                    (device) => !existingDevices.some((existing) => existing._id === device._id)
+                );
+
+                const deviceItem = document.createElement("div");
+                deviceItem.className = "device-item card shadow mb-3";
+                deviceItem.innerHTML = `
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="device_${index}">Tên thiết bị</label>
+                                <select id="device_${index}" class="form-control" name="devices[${index}][id]" required>
+                                    <option value="">-- Chọn thiết bị --</option>
+                                    ${filteredDevices
+                                        .map(
+                                            (device) =>
+                                                `<option value="${device._id}" data-thumbnail="${device.thumbnail}">${device.name}</option>`
+                                        )
+                                        .join("")}
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="deviceThumbnail_${index}">Ảnh thiết bị</label>
+                                <img id="deviceThumbnail_${index}" class="img-thumbnail" src="" alt="Hình ảnh thiết bị" width="100px" hidden>
+                            </div>
+                            <div class="col-md-4 text-right">
+                                <button class="btn btn-danger btn-sm" type="button" data-index="${index}" button-remove-device>Xóa</button>
+                            </div>
+                        </div>
+                    </div>`;
+                deviceList.appendChild(deviceItem);
+
+                // Gán sự kiện cập nhật ảnh khi chọn thiết bị
+                const deviceSelect = document.getElementById(`device_${index}`);
+                deviceSelect.addEventListener("change", (e) => {
+                    const selectedOption = e.target.options[e.target.selectedIndex];
+                    const thumbnail = selectedOption.getAttribute("data-thumbnail");
+                    const thumbnailElement = document.getElementById(`deviceThumbnail_${index}`);
+                    if (thumbnail) {
+                        thumbnailElement.src = thumbnail;
+                        thumbnailElement.hidden = false;
+                    } else {
+                        thumbnailElement.hidden = true;
+                    }
+                });
+            };
+
+            // Xử lý thêm thiết bị
+            addDeviceBtn.addEventListener("click", () => {
+                addDeviceItem(deviceIndex);
+                deviceIndex++;
             });
 
-            // Thêm thiết bị (có thể tùy chỉnh thêm nếu cần thiết)
-            addDeviceBtn.addEventListener("click", () => {
-                const newDeviceName = newDeviceInput.value.trim();
-                const newDeviceThumbnail = newDeviceThumbnailInput.value.trim();
-                if (newDeviceName && newDeviceThumbnail) {
-                    const li = document.createElement("li");
-                    li.className = "list-group-item d-flex align-items-center justify-content-between";
-                    li.innerHTML =
-                        `<img src="${newDeviceThumbnail}" alt="${newDeviceName}" width="50px" height="50px" />
-                         <span class="ml-2">${newDeviceName}</span>
-                         <button class="btn btn-danger btn-sm" type="button" button-remove-device>Xóa</button>`;
-                    deviceList.appendChild(li);
-                    newDeviceInput.value = "";
-                    newDeviceThumbnailInput.value = "";
+            // Xử lý xóa thiết bị
+            deviceList.addEventListener("click", (event) => {
+                if (event.target.matches("[button-remove-device]")) {
+                    const index = event.target.dataset.index;
+                    const removedDeviceId = document.querySelector(
+                        `#device_${index}`
+                    )?.value;
+                    if (removedDeviceId) {
+                        const removedDeviceIndex = existingDevices.findIndex(
+                            (device) => device._id === removedDeviceId
+                        );
+                        if (removedDeviceIndex !== -1) {
+                            existingDevices.splice(removedDeviceIndex, 1);
+                        }
+                    }
+                    event.target.closest(".device-item").remove();
                 }
             });
         });
