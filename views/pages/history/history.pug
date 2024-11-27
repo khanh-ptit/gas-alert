@@ -3,20 +3,51 @@ include ../../mixins/pagination.pug
 
 block content
     .container.my-5
-        h2.text-center.mb-4 Lịch Sử Nồng Độ Khí Gas
-        table.table.table-bordered.mt-3
-            thead
-                tr
-                    th Mã lịch sử
-                    th Nồng độ khí gas (ppm)
-                    th Trạng thái cảnh báo
-                    th Thời gian
-            tbody
-                each history in gasHistory
-                    tr
-                        td= history._id
-                        td= history.gasLevel
-                        td= history.alertStatus
-                        td= new Date(history.timestamp).toLocaleString()
+        h2.text-center.mb-4.text-primary.font-weight-bold Lịch Sử Nồng Độ Khí Gas
 
-    +pagination(pagination)
+        //- Bộ lọc theo thời gian
+        .row.mb-4.justify-content-between.align-items-center
+            .col-md-8
+                form(action="/history" method="GET")
+                    .row.g-3.align-items-center
+                        .col-md-5
+                            label(for="startDate" class="form-label fw-bold") Thời gian bắt đầu
+                            input#startDate.form-control(type="date" name="startDate" value=(startDate || ''))
+                        .col-md-5
+                            label(for="endDate" class="form-label fw-bold") Thời gian kết thúc
+                            input#endDate.form-control(type="date" name="endDate" value=(endDate || ''))
+                        .col-md-2
+                            button.btn.btn-primary.mt-4.w-100(type="submit") Lọc
+            .col-md-3.text-end
+                button.btn.btn-success(onclick="location.reload()") Làm mới dữ liệu
+
+        //- Bảng lịch sử với giao diện cải tiến
+        table.table.table-hover.table-striped.table-responsive-md.mt-3
+            thead
+                tr(style="background-color: #4e73df; color: white;")
+                    th.text-center Mã Lịch Sử
+                    th.text-center Nồng Độ Khí Gas (ppm)
+                    th.text-center Trạng Thái Cảnh Báo
+                    th.text-center Thời Gian
+            tbody
+                if gasHistory.length
+                    each history in gasHistory
+                        tr
+                            td.text-center= history._id
+                            td.text-center.text-info= history.gasLevel
+                            td.text-center
+                                if history.alertStatus === "Tắt"
+                                    span.badge.bg-danger.text-white #{history.alertStatus}
+                                else if history.alertStatus === "Bật"
+                                    span.badge.bg-warning.text-dark #{history.alertStatus}
+                                else
+                                    span.badge.bg-success.text-white #{history.alertStatus}
+                            td.text-center.text-muted= new Date(history.timestamp).toLocaleString()
+                else
+                    tr
+                        td Không có dữ liệu lịch sử nào!
+
+        //- Phân trang
+        +pagination(pagination)
+    
+    script(src="/js/history.js") 
