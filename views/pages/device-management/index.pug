@@ -28,19 +28,19 @@ block content
                 each device, index in devices
                     tr.text-center
                         td #{index + 1}
-                        // Hiển thị hình ảnh (nếu có), nếu không hiển thị một placeholder
+                        //- // Hiển thị hình ảnh (nếu có), nếu không hiển thị một placeholder
                         td
                             if device.thumbnail
                                 img(src=device.thumbnail, alt="Hình ảnh thiết bị", class="img-thumbnail", style="width: 75px; height: auto;")
                             else
                                 img(src="/images/placeholder.png", alt="Placeholder", class="img-thumbnail", style="width: 75px; height: auto;")
                         
-                        // Tên thiết bị
+                        //- // Tên thiết bị
                         td.text-left= device.name
 
-                        // Trạng thái hoạt động
+                        //- // Trạng thái hoạt động
                         td
-                            if device.isActive
+                            if (device.status == "active")
                                 span.badge.badge-success
                                     i.fas.fa-check-circle.mr-1
                                     | Đang Hoạt Động
@@ -49,15 +49,8 @@ block content
                                     i.fas.fa-times-circle.mr-1
                                     | Ngừng Hoạt Động
 
-                        // Ngày thêm thiết bị
+                        //- // Ngày thêm thiết bị
                         td= new Date(device.createdAt).toLocaleString()
-
-    form(
-        action=""
-        method="POST"
-        id="form-delete-item"
-        data-path=`device-management/delete`
-    )
 
     +pagination(pagination)
 

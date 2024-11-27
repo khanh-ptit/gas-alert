@@ -25,6 +25,7 @@ module.exports.index = async (req, res) => {
         // Lấy dữ liệu từ database
         const gasHistory = await GasHistory
             .find(find)
+            .sort({ timestamp: -1 }) 
             .skip(objectPagination.skip)
             .limit(objectPagination.limitItems)
     
