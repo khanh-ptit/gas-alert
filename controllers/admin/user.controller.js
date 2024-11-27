@@ -81,7 +81,7 @@ module.exports.edit = async (req, res) => {
 module.exports.editPatch = async (req, res) => {
     try {
         const { fullName, email, phone, address, devices } = req.body;
-        console.log(req.body); // Kiểm tra thông tin gửi lên
+        // console.log(req.body); // Kiểm tra thông tin gửi lên
 
         // Tìm người dùng theo ID
         const user = await User.findById(req.params.id);
@@ -121,4 +121,50 @@ module.exports.editPatch = async (req, res) => {
     }
 };
 
+// [GET] /admin/users/detail/:id
+module.exports.detail = async (req, res) => {
+    try {
+        // Lấy thông tin người dùng từ cơ sở dữ liệu
+        const user = await User.findById(req.params.id).populate('devices'); // Giả sử trường 'devices' trong User là một mảng chứa các ObjectId của thiết bị
 
+        if (!user) {
+            return res.status(404).send('Không tìm thấy người dùng');
+        }
+
+        // Render trang chi tiết người dùng với thông tin người dùng và thiết bị
+        res.render('pages/admin/users/detail', {
+            pageTitle: "Thông tin tài khoản",
+            user: user, // Truyền thông tin người dùng vào view
+            devices: user.devices // Truyền danh sách thiết bị của người dùng
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Có lỗi xảy ra trong khi lấy thông tin người dùng');
+    }
+};
+
+// [DELETE] /admin/users/delete/:id
+module.exports.deleteItem = async (req, res) => {
+    const id = req.params.id
+    await User.updateOne({
+        _id: id
+    }, {
+        deleted: true
+    })
+    req.flash("success", "Đã xóa tài khoản")
+    res.redirect("back")
+}
+
+// [PATCH] /admin/users/change-status/:status/:id
+module.exports.changeStatus = async (req, res) => {
+    const status = req.params.status
+    const id = req.params.id
+
+    await User.updateOne({
+        _id: id
+    }, {
+        status: status
+    })
+    req.flash("success", "Cập nhật trạng thái thành công !")
+    res.redirect("back")
+}

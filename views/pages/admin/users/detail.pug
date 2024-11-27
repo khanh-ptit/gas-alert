@@ -1,0 +1,61 @@
+extends ../../../layouts/admin/main
+include ../../../mixins/alert.pug
+
+block content
+    +alert-success(5000)
+    +alert-error(5000)
+    
+    .container-fluid
+        //- Thông tin cá nhân
+        fieldset.border.p-3.mb-4
+            legend.text-primary.font-weight-bold Thông tin cá nhân
+            .row.mb-3
+                label.col-md-2.col-form-label(for="fullName") Họ tên
+                .col-md-10
+                    p.form-control-plaintext= user.fullName
+
+            .row.mb-3
+                label.col-md-2.col-form-label(for="email") Email
+                .col-md-10
+                    p.form-control-plaintext= user.email
+
+            .row.mb-3
+                label.col-md-2.col-form-label(for="phone") Số điện thoại
+                .col-md-10
+                    p.form-control-plaintext= user.phone
+
+            .row.mb-3
+                label.col-md-2.col-form-label(for="address") Địa chỉ
+                .col-md-10
+                    p.form-control-plaintext= user.address
+
+        //- Danh sách thiết bị
+        fieldset.border.p-3.mb-4
+            legend.text-primary.font-weight-bold Danh sách thiết bị
+            .row.device-list
+                each device, index in user.devices
+                    .col-md-6.mb-3
+                        .device-item.card.shadow
+                            .card-body
+                                .row
+                                    .col-md-6
+                                        label(for=`device_${index}`) Tên thiết bị
+                                        p.form-control-plaintext= device.name
+
+                                    .col-md-6
+                                        label(for=`deviceThumbnail_${index}`) Ảnh thiết bị:   
+                                        img.img-thumbnail(
+                                            id=`deviceThumbnail_${index}`
+                                            src=device.thumbnail
+                                            alt=device.name
+                                            width="100px"
+                                        )
+
+        //- Nút điều hướng
+        .form-group.text-center.mt-4
+            a.btn.btn-danger.btn-lg(href="/admin/users") 
+                i.fas.fa-list
+                |  Quay lại danh sách người dùng
+            a.btn.btn-warning.btn-lg.ml-3(href=`/admin/users/edit/${user._id}`)
+                i.fas.fa-edit
+                |  Chỉnh sửa thông tin

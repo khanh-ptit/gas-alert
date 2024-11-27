@@ -29,7 +29,11 @@ const userSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Device' // Trỏ tới model 'Device'
         }
-    ]
+    ],
+    status: {
+        type: String,
+        default: "active"
+    }
 }, {
     timestamps: true
 })
