@@ -22,7 +22,7 @@ module.exports.index = async (req, res) => {
             .limit(objectPagination.limitItems)        
 
         res.render("pages/device-management/index.pug", {
-            pageTitle: "Quản lý thiết bị",
+            pageTitle: "Danh sách thiết bị",
             devices: devices,
             pagination: objectPagination
         });

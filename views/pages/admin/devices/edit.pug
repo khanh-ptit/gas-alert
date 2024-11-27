@@ -5,11 +5,11 @@ block content
     +alert-success(5000)
     +alert-error(5000)
 
-    h1.mb-4.text-center.header.text-primary Tạo mới thiết bị
+    h1.mb-4.text-center.header.text-primary Chỉnh sửa thiết bị
 
     form(
-        action=`/admin/devices/create`
-        id="form-create-device"
+        action=`/admin/devices/edit/${device.id}?_method=PATCH`
+        id="form-edit-device"
         method="POST"
         enctype="multipart/form-data"
         class="p-4 shadow rounded bg-white"
@@ -21,6 +21,7 @@ block content
                 class="form-control"
                 id="name"
                 name="name"
+                value=device.name
                 placeholder="Nhập tên thiết bị"
             )
 
@@ -32,7 +33,7 @@ block content
                     name="status"
                     class="form-check-input"
                     value="active"
-                    checked
+                    checked=(device.status == "active" ? true : false)
                     
                 )
                 label(for="statusActive" class="form-check-label") Hoạt động
@@ -43,6 +44,7 @@ block content
                     name="status"
                     class="form-check-input"
                     value="inactive"
+                    checked=(device.status == "inactive" ? true : false)
                 )
                 label(for="statusInactive" class="form-check-label") Dừng hoạt động
 
@@ -61,7 +63,7 @@ block content
             )
             div(class="image-container mt-2 d-flex align-items-center")
                 img(
-                    src=""
+                    src=device.thumbnail
                     upload-image-preview
                     class="image-preview rounded border"
                     style="width: 150px; height: 150px; object-fit: cover;"
@@ -72,6 +74,6 @@ block content
             button(
                 type="submit"
                 class="btn btn-primary px-5"
-            ) Tạo mới
+            ) Cập nhật
 
     script(src="/admin/js/device.js")
