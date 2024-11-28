@@ -2,16 +2,35 @@ document.addEventListener('DOMContentLoaded', function () {
     // Lấy phần tử công tắc và trạng thái
     const manualSwitch = document.getElementById("manualSwitch");
     const switchStatus = document.getElementById("switchStatus");
+    const slider = document.querySelector('.slider');
 
-    console.log(manualSwitch, switchStatus);
+    console.log(manualSwitch.type);  // Kỳ vọng: "checkbox"
+    console.log(switchStatus.textContent);  // Kỳ vọng: "Tắt"
 
-    // Ghi nhận thay đổi trạng thái công tắc
+    if (!manualSwitch || !switchStatus || !slider) {
+        console.error("Không tìm thấy phần tử cần thiết trong DOM.");
+        return;
+    }
+
+    console.log("Phần tử công tắc và trạng thái đã sẵn sàng:", manualSwitch, switchStatus);
+
+    // Thêm sự kiện change vào input
     manualSwitch.addEventListener("change", () => {
-        const isOn = manualSwitch.checked;
-        console.log("*");
-        switchStatus.textContent = `Trạng thái: ${isOn ? "Bật" : "Tắt"}`;
+        const isOn = manualSwitch.checked;  // Kiểm tra trạng thái bật/tắt
+        switchStatus.textContent = `Trạng thái: ${isOn ? "Bật" : "Tắt"}`;  // Cập nhật trạng thái
 
-        // Thực hiện hành động khi công tắc thay đổi
+        // Cập nhật giao diện khi bật/tắt
+        if (isOn) {
+            // Khi bật công tắc
+            slider.style.backgroundColor = '#007bff';  // Màu xanh cho công tắc bật
+            slider.querySelector('::before').style.transform = 'translateX(26px)';  // Đổi vị trí "kép"
+        } else {
+            // Khi tắt công tắc
+            slider.style.backgroundColor = '#ccc';  // Màu xám cho công tắc tắt
+            slider.querySelector('::before').style.transform = 'translateX(0)';  // Đặt về vị trí ban đầu
+        }
+
+        // Log trạng thái thay đổi
         if (isOn) {
             console.log("Hệ thống được kích hoạt thủ công.");
         } else {
@@ -19,6 +38,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // Thêm sự kiện click vào slider (nếu muốn bắt sự kiện click trên slider)
+    slider.addEventListener('click', () => {
+        const isOn = manualSwitch.checked;
+        console.log(`Trạng thái: ${isOn ? "Bật" : "Tắt"}`);
+    });
+    
 
     // Biểu đồ hiển thị nồng độ khí gas theo thời gian
     const ctxLineChart = document.getElementById('gasLevelChart').getContext('2d');
@@ -112,14 +137,21 @@ document.addEventListener('DOMContentLoaded', function () {
     const connectionLed = document.getElementById('connectionLed');
     const alertLed = document.getElementById('alertLed');
 
-    // Lấy giá trị ngưỡng khi tải trang
-    fetch('/api/threshold')
-        .then((response) => response.json())
-        .then((data) => {
-            threshold = data.threshold || 600;
-            updateThresholdDisplay(threshold);
-        })
-        .catch((error) => console.error('Error fetching threshold:', error));
+    // Lầy ra giá trị ngưỡng
+    fetch('/dashboard/api/threshold')
+    .then((response) => {
+        console.log('Response:', response);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then((data) => {
+        threshold = data.threshold || 600;
+        updateThresholdDisplay(threshold);
+    })
+    .catch((error) => console.error('Error fetching threshold:', error));
+
 
     // Lắng nghe dữ liệu thời gian thực từ server
     socket.on('gasData', (data) => {
@@ -147,7 +179,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Gửi ngưỡng mới lên server
     thresholdSlider.addEventListener('change', function () {
-        fetch('/api/threshold', {
+        // console.log(thresholdSlider)
+        fetch('/dashboard/api/threshold', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ newThreshold: threshold }),
@@ -158,26 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .catch((error) => console.error('Error updating threshold:', error));
     });
-
-    // // thêm vào
-    // // API GET: Lấy ngưỡng hiện tại
-    // app.get('/api/threshold', (req, res) => {
-    //     res.json({ threshold: currentThreshold });
-    // });
-
-    // // API POST: Cập nhật ngưỡng mới
-    // app.post('/api/threshold', (req, res) => {
-    //     const { newThreshold } = req.body;
-    //     if (newThreshold && newThreshold >= 300 && newThreshold <= 1000) {
-    //         currentThreshold = newThreshold;
-    //         console.log('Ngưỡng mới:', currentThreshold);
-    //         res.json({ success: true, threshold: currentThreshold });
-    //     } else {
-    //         res.status(400).json({ success: false, message: 'Giá trị ngưỡng không hợp lệ.' });
-    //     }
-    // });
-    // //
-
+       
     // Hàm: Cập nhật giao diện Dashboard
     function updateDashboard(gasLevel, threshold) {
         gasLevelValue.textContent = `${gasLevel} ppm`;
@@ -219,7 +233,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Hàm: Cập nhật hiển thị ngưỡng
     function updateThresholdDisplay(value) {
-        thresholdValue.textContent = `Ngưỡng Cảnh Báo Hiện Tại: ${value} ppm`;
+        thresholdValue.textContent = `Ngưỡng Cảnh Báo: ${value} ppm`;
     }
 
     // Fallback: Lấy dữ liệu định kỳ nếu Socket.IO không hoạt động

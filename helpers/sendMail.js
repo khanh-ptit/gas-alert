@@ -14,7 +14,7 @@ module.exports.sendMail = (email, subject, html) => {
     });
 
     const mailOptions = {
-        from: 'khanhhs11vtt@gmail.com',
+        from: 'Hệ thống cảnh báo khí gas <khanhhs11vtt@gmail.com>',
         to: email,
         subject: subject,
         html: html

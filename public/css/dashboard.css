@@ -153,6 +153,7 @@ p#gasLevelValue {
     background-color: #ccc;
     transition: 0.4s;
     border-radius: 34px;
+    pointer-events: all; /* Đảm bảo slider nhận sự kiện click */
 }
 
 .slider:before {
